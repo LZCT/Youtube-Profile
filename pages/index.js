@@ -9,7 +9,7 @@ function HomePage() {
     return (
         <>
         <CSSReset />
-        <div style={estilo}>Welcome to LZCT!
+        <div style={estilo}>
             <Menu />
             <Header />
             <Timeline playlists={config.playlists} />
