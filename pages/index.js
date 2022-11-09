@@ -1,18 +1,22 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline, StyledTopArtist } from "../src/components/Timeline";
 
+
+
 function HomePage() {
     const estilo = {/**/ };
+    const [searchValue, setSearchValue] = React.useState();
     return (
         <>
         <CSSReset />
         <div style={estilo}>
-            <Menu />
+            <Menu searchValue={searchValue} setSearchValue={setSearchValue}/>
             <Header banner={config.banner}/>
-            <Timeline playlists={config.playlists} artists={config.topArtists}/>
+            <Timeline searchValue={searchValue} playlists={config.playlists} artists={config.topArtists}/>
         </div>
         </>
     )
@@ -37,7 +41,7 @@ const StyledHeader = styled.div`
     }
     .banner{
         width: 100%;
-        height: 300px;
+        height: 230px;
         object-fit: cover;
         object-position: 100% 75%;
 
@@ -60,22 +64,31 @@ function Header(props) {
     )
 }
 
-function Timeline(props) {
+function Timeline({searchValue, ...props}) {
     const playlistNames = Object.keys(props.playlists);
     const topArtists = props.artists;
-    console.log(topArtists);
     return (
         <>
         <StyledTimeline>
             {playlistNames.map((playlistName) => {
                 const videos = props.playlists[playlistName];
                 return (
-                    <section>
+                    <section key={playlistName}>
                         <h2>{playlistName}</h2>
                         <div>
-                            {videos.map((video) => {
+                            {videos.filter((video) => {
+                                const titleNormalized = video.title.toLowerCase();
+                                
+                                if (searchValue){
+                                    const searchValueNormalized = searchValue.toLowerCase();
+                                    return titleNormalized.includes(searchValueNormalized);
+                                }
+                                else
+                                    return titleNormalized;
+                            })
+                            .map((video) => {
                                 return (
-                                    <a href={video.url}>
+                                    <a key={video.url} href={video.url}>
                                         <img className="video-thumb" src={video.thumb} />
                                         <span>
                                             {video.title}
@@ -97,20 +110,14 @@ function Timeline(props) {
                 <h2>Your Most-streamed Artists</h2>
                 <div>
                 {topArtists.map((artist) => {
-                    console.log(artist.artist);
-                    
                     return(
-                        
                         <a href={artist.url}>
                             <img className="artist-thumb"src={artist.thumb}/>
                             <span>
-                            
                                 {artist.name}
                             </span>
                         </a>
-                        
                     )
-                    
                 })}
                 </div>
             </section>
