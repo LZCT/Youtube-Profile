@@ -3,11 +3,35 @@ import config from "../config.json";
 import styled from "styled-components";
 import Menu from "../src/components/Menu";
 import { StyledTimeline, StyledTopArtist } from "../src/components/Timeline";
+import { createClient } from "@supabase/supabase-js";
+import { videoService } from "../src/services/videoService";
 
 
 
 function HomePage() {
+    const service = videoService();
     const [searchValue, setSearchValue] = React.useState();
+    const [playlists, setplaylists] = React.useState({});
+
+    React.useEffect(() => {
+        service
+            .getAllVideos()
+            .then((resp) => {
+                const newPlaylists = {...playlists};
+                resp.data.forEach((video) => {
+                    if(!newPlaylists[video.playlist]){
+                        newPlaylists[video.playlist] = [];
+                    }
+                    newPlaylists[video.playlist].push(video);
+                })
+                setplaylists(playlists);
+            });
+        
+    }, [])    
+
+    
+  
+
     return (
         <>
         <div>
