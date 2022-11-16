@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import React from "react";
-import { StyledRegisterVideo } from "./Styles";
+import { StyledRegisterVideo } from "./styles";
 
 //Get youtube video ID
 function getVideoId(url) {
