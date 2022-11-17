@@ -70,13 +70,15 @@ export default function RegisterVideo(){
                 formRegister.clearForm();
             }}>
                 <div>
+                    <h1>Video Register</h1>
+                    <br></br>
                     <button type="button" className="close-modal" onClick={() => setFormVisibility(false)}>
                         X
                     </button>
-                    <input placeholder="Video Name:" value={formRegister.values.title} 
+                    <input placeholder="Video Name" value={formRegister.values.title} 
                         name="title"
                         onChange={formRegister.handleChange}/>
-                    <input placeholder="URL:" value={formRegister.values.url} 
+                    <input placeholder="URL" value={formRegister.values.url} 
                         name="url"
                         onChange={formRegister.handleChange}/>
                     <button type="Submit">

@@ -37,4 +37,20 @@ export const CSSReset = createGlobalStyle`
       opacity: .5;
     }
   }
+    //Scrollbar Modification
+  ::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track{
+    background-color: rgba(80,80,80, 0.6);
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: red;
+    border-radius: 5px;
+    
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(255,0,0, 0.6);
+  }
 `;

@@ -98,7 +98,7 @@ function Timeline({searchValue, ...props}) {
                 return (
                     <section key={playlistName}>
                         <h2>{playlistName}</h2>
-                        <div>
+                        <div className="playlists">
                             {videos.filter((video) => {
                                 const titleNormalized = video.title.toLowerCase();
                                 
@@ -113,10 +113,10 @@ function Timeline({searchValue, ...props}) {
                                 return (
                                     <a key={video.url} href={video.url}>
                                         <img className="video-thumb" src={video.thumb} />
-                                        <span>
+                                        <span className="video-title">
                                             {video.title}
                                         </span>
-
+                                        <br></br>
                                     </a>
                                 )
                             })}
@@ -127,11 +127,10 @@ function Timeline({searchValue, ...props}) {
 
 
             })}
-        </StyledTimeline>
-        <StyledTopArtist>
+        
             <section>
                 <h2>Your Most-streamed Artists</h2>
-                <div>
+                <div className="most-streamed-artists">
                 {topArtists.map((artist) => {
                     return(
                         <a href={artist.url}>
@@ -144,7 +143,7 @@ function Timeline({searchValue, ...props}) {
                 })}
                 </div>
             </section>
-        </StyledTopArtist>
+        </StyledTimeline>
         </>
     )
 }
