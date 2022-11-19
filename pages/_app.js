@@ -5,6 +5,7 @@ import ColorModeProvider, { ColorModeContext } from "../src/components/Menu/comp
 import RegisterVideo from "../src/components/RegisterVideo";
 
 
+
 const theme = {
     light: {
         backgroundBase: "#f9f9f9",

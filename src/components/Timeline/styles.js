@@ -53,6 +53,9 @@ export const StyledTimeline = styled.div`
           padding-right: 24px;
         }
       }
+      a:hover {
+        cursor:pointer;
+      }
     }
     .most-streamed-artists{
         grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
