@@ -26,7 +26,6 @@ function useForm(values, setValues){
 // Get all playlists stored in localStorage
 function getAllPlaylists(){
     let playlists = JSON.parse(localStorage.getItem('playlists'));
-   // playlists = Object.keys(playlists)
     return playlists;
 }
 
@@ -88,7 +87,7 @@ export default function RegisterVideo(props){
                     <select id="playlists" name="playlist" onChange={formRegister.handleChange} value={formRegister.values.playlist}>
                         <option value="DEFAULT" key="optionDefault" disabled> -- Select a Playlist -- </option>
                         {
-                            Object.keys(getAllPlaylists()).map((playlistName) => {
+                            Object.keys(props.playlists).map((playlistName) => {
                                 return (<option value={playlistName} key={playlistName}>{playlistName}</option>)
                         })}
     

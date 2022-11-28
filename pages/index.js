@@ -19,13 +19,19 @@ function HomePage() {
     // State with the video playing
     const [videoPlaying, setVideoPlaying] = React.useState({name: "", url: "https://www.youtube.com/watch?v=video_id", playlist: ""});
     
-    //Get playlists from localStorage, if localStorage is not set, set localStorage with playlists from config.json
+      //Get playlists from localStorage, if localStorage is not set, set localStorage with playlists from config.json
     React.useEffect(() => {
+        
         const newPlaylists = JSON.parse(localStorage.getItem('playlists'));
-        if(!newPlaylists)
+        if(!newPlaylists){
             localStorage.setItem('playlists', JSON.stringify(config.playlists));
-        if(playlists != newPlaylists)
-            setPlaylists(newPlaylists);
+            setPlaylists(config.playlists);
+        }
+        else{
+            if(playlists != newPlaylists)
+                setPlaylists(newPlaylists);
+        }
+       
     }, []);
 
     return (
