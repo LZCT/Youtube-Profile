@@ -2,10 +2,11 @@ import React from "react";
 import config from "../../../config.json";
 import {StyledHeader} from "./styles";
 
-function Header(props) {
+
+function Header() {
     return (
         <StyledHeader>
-            <img className="banner" src={props.banner}/>
+            <img className="banner" src={config.banner}/>
             <section className="user-info">
                 <img className ="profile-photo" src={`https://github.com/${config.github}.png`} />
                 <div>

@@ -12,6 +12,14 @@ export const StyledVideoPlayer = styled.div`
     border: none;
     cursor: pointer;
   }
+  .remove-video{
+    background-color: red;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    color: white;
+  }
   .videoPlayer{
     width: 100%;
     padding: 5%;

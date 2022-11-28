@@ -27,12 +27,19 @@ export const StyledRegisterVideo = styled.div`
     cursor: pointer;
   }
   button[type="submit"] {
-    background-color: red;
+    background-color: #ff0000;
     padding: 8px 16px;
     border: none;
     border-radius: 2px;
     cursor: pointer;
     color: white;
+  }
+  button[type="submit"]:disabled{
+    background-color: grey;
+    cursor: not-allowed;
+    &:hover{
+      opacity: 1;
+    }
   }
   form {
     width: 100%;
@@ -56,7 +63,7 @@ export const StyledRegisterVideo = styled.div`
       padding-top: 40px;
     }
   }
-  input {
+  input, select {
     border-radius: 2px;
     border: 1px solid ${({ theme }) => theme.borderBase};
     padding: 8px 10px;

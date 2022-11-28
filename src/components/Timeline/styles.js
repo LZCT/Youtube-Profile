@@ -18,6 +18,10 @@ export const StyledTimeline = styled.div`
     max-width: 210px;
     height: auto;
   }
+  .playlist-empty{
+    color: #ff0000;
+    text-transform: none;
+  }
   .artist-thumb{
     width:80px;
     height:80px;

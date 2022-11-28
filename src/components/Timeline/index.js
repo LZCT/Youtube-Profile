@@ -1,16 +1,28 @@
 import React from "react";
 import {StyledTimeline} from "./styles";
+import config from "../../../config.json";
+
+// Function to check if a playlist is empty
+function isPlaylistEmpty(numberOfVideos, isSearch){
+    if(numberOfVideos === 0){
+        if(isSearch)
+            return <h2 className="playlist-empty">There are no videos in this playlist that match your search!</h2>;
+        return <h2 className="playlist-empty">This playlist is empty!</h2>;
+    }
+        
+}
 
 function Timeline({searchValue, ...props}) {
     const playlistNames = Object.keys(props.playlists);
-    const topArtists = props.artists;
+    const topArtists = config.topArtists;
     
     return (
         <>
         <StyledTimeline>
+            
             {playlistNames.map((playlistName) => {
                 const videos = props.playlists[playlistName];
-                
+                let numberOfVideos = 0;
                 return (
                     <section key={playlistName}>
                         <h2>{playlistName}</h2>
@@ -26,11 +38,12 @@ function Timeline({searchValue, ...props}) {
                                 }
                             })
                             .map((video) => {
+                                {numberOfVideos += 1;}
                                 return (
                                     <a key={video.url}  onClick={() => 
                                         {
                                             props.setVideoPlayerVisibility(true);
-                                            props.setVideoPlaying({name: video.title, url: video.url});
+                                            props.setVideoPlaying({name: video.title, url: video.url, playlist: playlistName});
                                         }}>
                                         
                                         <img className="video-thumb" src={video.thumb} />
@@ -40,10 +53,14 @@ function Timeline({searchValue, ...props}) {
                                         <br></br>
                                     </a>
                                 )
-                            })}
+                            })
+                            }
+                            
                         </div>
+                        {isPlaylistEmpty(numberOfVideos, searchValue)}
                     </section>
                 )
+                
             })}
         
             <section>
@@ -51,7 +68,7 @@ function Timeline({searchValue, ...props}) {
                 <div className="most-streamed-artists">
                 {topArtists.map((artist) => {
                     return(
-                        <a href={artist.url}>
+                        <a href={artist.url} key={artist.url}>
                             <img className="artist-thumb"src={artist.thumb}/>
                             <span>
                                 {artist.name}
