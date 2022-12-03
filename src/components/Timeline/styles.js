@@ -8,7 +8,7 @@ export const StyledTimeline = styled.div`
   h2 {
     font-size: 16px;
     margin-bottom: 16px;
-    text-transform: capitalize;
+    //text-transform: capitalize;
   }
   .video-thumb {
     aspect-ratio: 16/9;
@@ -18,7 +18,7 @@ export const StyledTimeline = styled.div`
     max-width: 210px;
     height: auto;
   }
-  .playlist-empty{
+  .playlist-warning{
     color: #ff0000;
     text-transform: none;
   }
@@ -37,16 +37,7 @@ export const StyledTimeline = styled.div`
     padding: 0;
     overflow: hidden;
     padding: 16px;
-    div {
-      width: calc(100vw - 16px * 4);
-      display: grid;
-      grid-gap: 16px;
-      grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(200px,1fr);
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      a {
+    a {
         scroll-snap-align: start;
         span {
           display: block;
@@ -57,9 +48,19 @@ export const StyledTimeline = styled.div`
           padding-right: 24px;
         }
       }
-      a:hover {
-        cursor:pointer;
-      }
+    a:hover {
+      cursor:pointer;
+    }
+    div {
+      width: calc(100vw - 16px * 4);
+      display: grid;
+      grid-gap: 16px;
+      grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(200px,1fr);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+     
     }
     .most-streamed-artists{
         grid-template-columns: repeat(auto-fill,minmax(100px,1fr));

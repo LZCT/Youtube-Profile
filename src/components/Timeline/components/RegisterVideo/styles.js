@@ -32,7 +32,7 @@ export const StyledRegisterVideo = styled.div`
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    color: white;
+    color: #ffffff;
   }
   button[type="submit"]:disabled{
     background-color: grey;
@@ -76,6 +76,17 @@ export const StyledRegisterVideo = styled.div`
   }
   h1{
     text-align: center;
+    color: ${({ theme }) => theme.textColorBase};
+  }
+  span{
+    color: #ff0000;
+    font-size: 13px;
+    padding: 3px;
+    text-align: center;
+  }
+  label{
+    font-size: 13px;
+    padding: 3px;
     color: ${({ theme }) => theme.textColorBase};
   }
 `;

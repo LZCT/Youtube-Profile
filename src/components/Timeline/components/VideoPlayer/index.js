@@ -1,12 +1,12 @@
 import React from "react";
-import {getVideoId} from "../Helpers";
+import {getVideoId} from "../../../Helpers";
 import { StyledVideoPlayer } from "./styles";
 
 
 
 const VideoPlayer = (props) => {
+    
     const videoID = getVideoId(props.videoPlaying.url);
-        
     return(
         <StyledVideoPlayer>
              {props.videoPlayerVisibility ? (
@@ -24,13 +24,16 @@ const VideoPlayer = (props) => {
                             {/* Search for the video in the playlist*/}
                             const videoToRemove = props.playlists[props.videoPlaying.playlist].findIndex(video => {
                                 return video.url === props.videoPlaying.url;
-                              });;
-                            let newPlaylist = props.playlists;
-                            {/* Remove video from array*/}
+                            });
+                            //Deep cloning playlists state
+                            let newPlaylist = JSON.parse(JSON.stringify(props.playlists));
+                            //Remove video from array
                             newPlaylist[props.videoPlaying.playlist].splice(videoToRemove, 1);
-                            {/* Save new playlist to the localstorage*/}
+                            //Save new playlist to the localstorage
                             localStorage.setItem('playlists', JSON.stringify(newPlaylist));
-                            {/* Closes video player modal*/}
+                            // Update playlists state
+                            props.setPlaylists(newPlaylist);
+                            // Closes video player modal
                             props.setVideoPlayerVisibility(false);
                         }} >
                             Remove from Playlist

@@ -1,31 +1,74 @@
 import React from "react";
 import {StyledTimeline} from "./styles";
 import config from "../../../config.json";
+import VideoPlayer from "./components/VideoPlayer";
+import RegisterVideo from "./components/RegisterVideo";
+import PlaylistInfo from "./components/PlaylistInfo";
 
 // Function to check if a playlist is empty
 function isPlaylistEmpty(numberOfVideos, isSearch){
     if(numberOfVideos === 0){
         if(isSearch)
-            return <h2 className="playlist-empty">There are no videos in this playlist that match your search!</h2>;
-        return <h2 className="playlist-empty">This playlist is empty!</h2>;
+            return <h2 className="playlist-warning">There are no videos in this playlist that match your search!</h2>;
+        return <h2 className="playlist-warning">This playlist is empty!</h2>;
     }
         
 }
 
+function areTherePaylists(playlists){
+    if(playlists.length === 0)
+        return (
+            <section>
+                <h2 className="playlist-warning">You don't have any playlists yet! Click the + in the corner of the screen to start adding playlists and videos!</h2>
+            </section>
+            
+        );
+        
+}
+
 function Timeline({searchValue, ...props}) {
-    const playlistNames = Object.keys(props.playlists);
-    const topArtists = config.topArtists;
+
+    // State with the playlists
+    const [playlists, setPlaylists] = React.useState({});
+    // State to show video player modal
+    const [videoPlayerVisibility, setVideoPlayerVisibility] = React.useState(false);
+    // State to show register video modal
+    const [formVisibility, setFormVisibility] = React.useState(false);
+    // State to show playlist info modal
+    const [playlistInfo, setPlaylistInfo] = React.useState({name: "", numberOfVideos: 0, visibility: false});
+    // State with the video playing
+    const [videoPlaying, setVideoPlaying] = React.useState({name: "", url: "https://www.youtube.com/watch?v=video_id", playlist: ""});
     
+
+     //Get playlists from localStorage, if localStorage is not set, set localStorage with playlists from config.json
+     React.useEffect(() => {
+        
+        const newPlaylists = JSON.parse(localStorage.getItem('playlists'));
+        if(!newPlaylists){
+            localStorage.setItem('playlists', JSON.stringify(config.playlists));
+            setPlaylists(config.playlists);
+        }
+        else{
+            if(playlists != newPlaylists)
+                setPlaylists(newPlaylists);
+        }
+    
+    }, []);
+    
+    const playlistNames = Object.keys(playlists);
+    const topArtists = config.topArtists;
+
     return (
         <>
         <StyledTimeline>
             
+            {areTherePaylists(playlistNames)}
             {playlistNames.map((playlistName) => {
-                const videos = props.playlists[playlistName];
+                const videos = playlists[playlistName];
                 let numberOfVideos = 0;
                 return (
                     <section key={playlistName}>
-                        <h2>{playlistName}</h2>
+                        <h2><a key={playlistName}  onClick={() => {setPlaylistInfo({name: playlistName, numberOfVideos: numberOfVideos,  visibility: true})}}>{playlistName}</a></h2>
                         <div className="playlists">
                             {videos.filter((video) => {
                                 const titleNormalized = video.title.toLowerCase();
@@ -38,12 +81,12 @@ function Timeline({searchValue, ...props}) {
                                 }
                             })
                             .map((video) => {
-                                {numberOfVideos += 1;}
+                                numberOfVideos+=1;
                                 return (
                                     <a key={video.url}  onClick={() => 
                                         {
-                                            props.setVideoPlayerVisibility(true);
-                                            props.setVideoPlaying({name: video.title, url: video.url, playlist: playlistName});
+                                            setVideoPlayerVisibility(true);
+                                            setVideoPlaying({name: video.title, url: video.url, playlist: playlistName});
                                         }}>
                                         
                                         <img className="video-thumb" src={video.thumb} />
@@ -79,6 +122,9 @@ function Timeline({searchValue, ...props}) {
                 </div>
             </section>
         </StyledTimeline>
+        <VideoPlayer videoPlayerVisibility={videoPlayerVisibility} setVideoPlayerVisibility={setVideoPlayerVisibility} videoPlaying={videoPlaying} playlists={playlists} setPlaylists={setPlaylists}/>
+        <RegisterVideo playlists={playlists} formVisibility={formVisibility} setFormVisibility={setFormVisibility} setPlaylists={setPlaylists}/>
+        <PlaylistInfo playlistInfo={playlistInfo} setPlaylistInfo={setPlaylistInfo} playlists={playlists} setPlaylists={setPlaylists}/>
         </>
     )
 }

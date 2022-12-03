@@ -11,7 +11,7 @@ function Header() {
                 <img className ="profile-photo" src={`https://github.com/${config.github}.png`} />
                 <div>
                     <h2>{config.name}</h2>
-                    <p>{config.job}</p>
+                    <p>{config.subtext}</p>
                 </div>
 
             </section>
