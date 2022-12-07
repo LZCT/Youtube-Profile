@@ -74,7 +74,7 @@ function PlaylistInfo(props){
                                 
                                 <h4>{props.playlistInfo.numberOfVideos} videos</h4>
                                 <br/>    
-                                <input placeholder="New Playlist Name" maxLength="100" value={renamePlaylist.value} 
+                                <input placeholder="New Playlist Name" maxLength="50" value={renamePlaylist.value} 
                                     name="newPlaylistName"
                                     onChange={renamePlaylist.handleChange}/>
                                 
