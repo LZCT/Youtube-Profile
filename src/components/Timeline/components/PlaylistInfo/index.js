@@ -1,6 +1,4 @@
 import React from "react";
-import { StyledPlaylistInfo } from "./styles";
-
 
 //Custom Hook - RenamePlaylist 
 function useRenamePlaylist(value, setValue){    
@@ -34,11 +32,11 @@ function PlaylistInfo(props){
     
 
     return(
-        <StyledPlaylistInfo>
+        <>
             {props.playlistInfo.visibility ? (
                         
                         <form onSubmit={(e) => {
-                           
+    
                             e.preventDefault();
                             // Check if the new playlist name is the same that the old one
                             if(newPlaylistName == props.playlistInfo.name){
@@ -114,7 +112,7 @@ function PlaylistInfo(props){
                
                 
             ) : false}
-        </StyledPlaylistInfo>
+        </>
     )
     
 }

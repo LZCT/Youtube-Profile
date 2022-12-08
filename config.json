@@ -131,7 +131,7 @@
           }
         ]
     },
-    "topArtists": [
+    "featureChannels": [
       {
         "name": "Muse",
         "url": "https://www.youtube.com/c/muse",

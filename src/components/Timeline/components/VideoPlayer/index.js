@@ -21,7 +21,7 @@ const VideoPlayer = (props) => {
 
                         {/* Button to remove video*/}
                         <button type="button" className="remove-video" onClick={() => {
-                            {/* Search for the video in the playlist*/}
+                            // Search for the video in the playlist
                             const videoToRemove = props.playlists[props.videoPlaying.playlist].findIndex(video => {
                                 return video.url === props.videoPlaying.url;
                             });

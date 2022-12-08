@@ -1,11 +1,8 @@
 import React from "react";
-import { StyledRegisterVideo } from "./styles";
 import {getVideoId} from "../../../Helpers";
 
-
-
-
 //Custom Hook - Form 
+// Updates form field values in state, show errors and clean form
 function useForm(values, setValues){    
     return {
         values,
@@ -27,8 +24,6 @@ function useForm(values, setValues){
 }
 
 
-
-
 export default function RegisterVideo(props){
     // State to disable submit button
     const [isDisabled, setIsDisabled] = React.useState(true);
@@ -40,10 +35,8 @@ export default function RegisterVideo(props){
     
     //Enable "New Playlist" input field when the new playlist is select
     React.useEffect(() => {
-        if(formRegister.values.playlist === "NEW"){
-            console.log(formRegister.values.playlist);
+        if(formRegister.values.playlist === "NEW")
             setIsNewPlaylist(true);
-        }   
         else
             setIsNewPlaylist(false);
     }, [formRegister.values.playlist]);
@@ -51,23 +44,18 @@ export default function RegisterVideo(props){
     //Enable submit button when all form fields are filled in
     React.useEffect(() => {
         if(values.title.trim().length > 0 && values.url.trim().length > 0 && values.playlist != "DEFAULT"){
-            if(isNewPlaylist && values.newPlaylist.trim().length <= 0){ 
-                console.log(">", isNewPlaylist)
+            if(isNewPlaylist && values.newPlaylist.trim().length <= 0)
                 setIsDisabled(true);
-            }  
-            else{
-                console.log(">New: ", isNewPlaylist, "lenght: ", values.newPlaylist.trim().length);
+            else
                 setIsDisabled(false);
-            }
         } 
         else
             setIsDisabled(true);
     }, [values,isNewPlaylist]);
     
-    
-    
+        
     return (
-    <StyledRegisterVideo>
+    <>
         <button className="add-video" onClick={() => props.setFormVisibility(true)}>
             +
         </button>
@@ -77,7 +65,6 @@ export default function RegisterVideo(props){
                 e.preventDefault();
                 // Get Video ID
                 const videoID = getVideoId(formRegister.values.url);
-
 
                 // Check if the Youtube URL is correct
                 if(!videoID){
@@ -96,7 +83,6 @@ export default function RegisterVideo(props){
                         document.getElementById("newPlaylist_error").innerHTML = `A playlist with the name "${formRegister.values.newPlaylist}" already exists! Select another name!<br/><br/>`;
                         return;
                     }
-
                     // Create new playlist
                     newPlaylists[formRegister.values.newPlaylist] = [];
                     // Set the playlist where the video will be saved to the new playlist
@@ -105,8 +91,8 @@ export default function RegisterVideo(props){
                 else{
                     //Check if Video is already in playlist
                     const videoIsInPlaylist = props.playlists[videoPlaylist].findIndex(video => {
-                    return getVideoId(video.url) === videoID;
-                     });
+                        return getVideoId(video.url) === videoID;
+                    });
                 
                     // If Video is already in playlist, show error message
                     if (videoIsInPlaylist != -1){
@@ -114,8 +100,6 @@ export default function RegisterVideo(props){
                         return;
                     }
                 }   
-                
-
                
                 // Add New Video
                 newPlaylists[videoPlaylist].push({
@@ -179,6 +163,6 @@ export default function RegisterVideo(props){
             </form>
         ) : false}
         
-    </StyledRegisterVideo>
+    </>
     )
 }

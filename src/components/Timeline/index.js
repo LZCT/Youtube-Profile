@@ -1,5 +1,5 @@
 import React from "react";
-import {StyledTimeline} from "./styles";
+import {StyledTimeline, StyledTimelineComponents} from "./styles";
 import config from "../../../config.json";
 import VideoPlayer from "./components/VideoPlayer";
 import RegisterVideo from "./components/RegisterVideo";
@@ -11,19 +11,17 @@ function isPlaylistEmpty(numberOfVideos, isSearch){
         if(isSearch)
             return <h2 className="playlist-warning">There are no videos in this playlist that match your search!</h2>;
         return <h2 className="playlist-warning">This playlist is empty!</h2>;
-    }
-        
+    }   
 }
 
+// Function to check if the user has playlists
 function areTherePaylists(playlists){
     if(playlists.length === 0)
         return (
             <section>
                 <h2 className="playlist-warning">You don't have any playlists yet! Click the + in the corner of the screen to start adding playlists and videos!</h2>
-            </section>
-            
+            </section> 
         );
-        
 }
 
 function Timeline({searchValue, ...props}) {
@@ -56,7 +54,7 @@ function Timeline({searchValue, ...props}) {
     }, []);
     
     const playlistNames = Object.keys(playlists);
-    const topArtists = config.topArtists;
+    const featureChannels = config.featureChannels;
 
     return (
         <>
@@ -107,24 +105,28 @@ function Timeline({searchValue, ...props}) {
             })}
         
             <section>
-                <h2>Your Most-streamed Artists</h2>
-                <div className="most-streamed-artists">
-                {topArtists.map((artist) => {
+                <h2>Other Channels</h2>
+                <div className="feature-channels">
+                {featureChannels.map((channel) => {
                     return(
-                        <a href={artist.url} key={artist.url}>
-                            <img className="artist-thumb"src={artist.thumb}/>
+                        <a href={channel.url} key={channel.url}>
+                            <img className="channel-thumb"src={channel.thumb}/>
                             <span>
-                                {artist.name}
+                                {channel.name}
                             </span>
                         </a>
                     )
                 })}
                 </div>
             </section>
+
         </StyledTimeline>
-        <VideoPlayer videoPlayerVisibility={videoPlayerVisibility} setVideoPlayerVisibility={setVideoPlayerVisibility} videoPlaying={videoPlaying} playlists={playlists} setPlaylists={setPlaylists}/>
-        <RegisterVideo playlists={playlists} formVisibility={formVisibility} setFormVisibility={setFormVisibility} setPlaylists={setPlaylists}/>
-        <PlaylistInfo playlistInfo={playlistInfo} setPlaylistInfo={setPlaylistInfo} playlists={playlists} setPlaylists={setPlaylists}/>
+
+        <StyledTimelineComponents>
+            <VideoPlayer videoPlayerVisibility={videoPlayerVisibility} setVideoPlayerVisibility={setVideoPlayerVisibility} videoPlaying={videoPlaying} playlists={playlists} setPlaylists={setPlaylists}/>
+            <RegisterVideo playlists={playlists} formVisibility={formVisibility} setFormVisibility={setFormVisibility} setPlaylists={setPlaylists}/>
+            <PlaylistInfo playlistInfo={playlistInfo} setPlaylistInfo={setPlaylistInfo} playlists={playlists} setPlaylists={setPlaylists}/>
+        </StyledTimelineComponents>
         </>
     )
 }
